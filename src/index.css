@@ -1,0 +1,23 @@
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "Nunito", "Segoe UI", sans-serif;
+  background: #fbf8f3;
+}
+#root {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #fbf8f3;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
