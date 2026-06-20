@@ -321,8 +321,8 @@ export default function TukiTukiApp() {
     const items = cart.map(i => `• ${i.name}${i.code ? ` (${i.code})` : ""} x${i.qty} = $${(i.price * i.qty).toFixed(2)}`).join("\n");
     const giftLine = giftWrap ? "🎁 *Empacado para regalo: SÍ*" : "🎁 Empacado para regalo: No";
     let shipLine = "";
-    if (shipping === "manta") shipLine = "🚚 *Envío en Manta*";
-    else if (shipping === "otra") shipLine = `🚚 *Envío a otra ciudad del Ecuador*${shippingCity ? `: ${shippingCity}` : ""}`;
+    if (shipping === "manta") shipLine = "🚚 *Envío en Manta* (el costo del envío se coordina aparte)";
+    else if (shipping === "otra") shipLine = `🚚 *Envío a otra ciudad del Ecuador*${shippingCity ? `: ${shippingCity}` : ""} (el costo del envío se coordina aparte)`;
     else if (shipping === "tienda") shipLine = "🏬 *Retiro en tienda*";
     const msg = `¡Hola Tuki Tuki! 🎉\n\nSoy ${customerName.trim()} y quiero hacer este pedido:\n\n${items}\n\n💰 *Total: $${total.toFixed(2)}*\n\n${giftLine}\n${shipLine}\n\n📞 Mi contacto: ${customerPhone.trim()}\n\n¡Gracias!`;
     window.open(`https://wa.me/593983500844?text=${encodeURIComponent(msg)}`, "_blank");
@@ -390,6 +390,7 @@ export default function TukiTukiApp() {
     inputV: (ok) => ({ width: "100%", padding: "13px 15px", border: `2px solid ${ok ? "#E6E1EF" : BRAND.red}`, borderRadius: 13, fontSize: 15, fontFamily: "inherit", fontWeight: 600, outline: "none", boxSizing: "border-box", marginBottom: 12, background: ok ? "#fff" : BRAND.red + "08" }),
     req: { color: BRAND.red, fontWeight: 900 },
     missingNote: { marginTop: 12, background: BRAND.red + "10", border: `1.5px solid ${BRAND.red}44`, color: BRAND.red, borderRadius: 11, padding: "10px 13px", fontSize: 12.5, fontWeight: 700 },
+    shipNote: { marginTop: 10, background: BRAND.gold + "12", border: `1.5px solid ${BRAND.gold}55`, color: "#8A6D1A", borderRadius: 11, padding: "10px 13px", fontSize: 12.5, fontWeight: 700, lineHeight: 1.4 },
     giftRow: (on) => ({ display: "flex", alignItems: "center", gap: 11, padding: "12px 14px", borderRadius: 13, border: `2px solid ${on ? BRAND.pink : "#E6E1EF"}`, background: on ? BRAND.pink + "12" : "#fff", cursor: "pointer", marginBottom: 14, userSelect: "none", color: on ? BRAND.pink : BRAND.dark }),
     checkbox: (on) => ({ width: 24, height: 24, borderRadius: 7, border: `2px solid ${on ? BRAND.pink : "#CFC8DA"}`, background: on ? BRAND.pink : "#fff", color: "#fff", fontWeight: 900, fontSize: 15, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }),
     fieldLabel: { fontSize: 13, fontWeight: 800, color: BRAND.purple, marginBottom: 8 },
@@ -545,6 +546,11 @@ export default function TukiTukiApp() {
                   </div>
                   {shipping === "otra" && (
                     <input style={{ ...S.inputV(shippingCity.trim() !== "" || shippingCity === ""), marginTop: 10 }} placeholder="¿A qué ciudad del Ecuador? 🏙️" value={shippingCity} onChange={e => setShippingCity(e.target.value)} />
+                  )}
+                  {(shipping === "manta" || shipping === "otra") && (
+                    <div style={S.shipNote}>
+                      🚚 El valor del envío se calcula aparte y se coordina por WhatsApp. Aplican cargos según la zona de entrega.
+                    </div>
                   )}
 
                   <div style={{ background: BRAND.blue + "0E", borderRadius: 13, padding: 14, margin: "14px 0 4px", fontSize: 13, color: "#5C566E" }}>
